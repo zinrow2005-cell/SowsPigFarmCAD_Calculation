@@ -1,5 +1,5 @@
 {
-  "version": "1.7.3",
+  "version": "1.7.4",
   "official": false,
   "calibration": {
     "ids": [
@@ -82,5 +82,6 @@
     "offline": "sw.js",
     "icon": "icons/icon-512.png",
     "deployment": "HTTPS or localhost"
-  }
+  },
+  "performance": "Gesture frame coalescing and deferred dimension/label layout; deduplicated candidates and hover calculation"
 }

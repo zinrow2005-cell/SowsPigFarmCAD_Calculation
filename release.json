@@ -1,20 +1,80 @@
 {
-  "app": "虎尾場 CAD 全場尺寸核對與代書 DXF 交付工作台",
-  "version": "1.2.5",
-  "sourceCAD": "虎尾場_CAD_2026-11-12_病死豬通道北側邊線補齊.dxf",
-  "sourceSHA256": "56a22c3924c658a9800b3c82f2abd3e74f4ed5c59021b74734fcdf6612fc7622",
-  "mainUpdates": [
-    "妊娠舍上下區間東端新增獨立浴室1，CAD 圖層、區塊選取、牆長與面積同步更新",
-    "橫向走道東端縮至浴室西牆；先前核定周界尺寸保留為歷史，不自動沿用",
-    "代書 DXF 原始 1117 圖元保留，另增 3 條草案隔牆與 1 個浴室1名稱",
-    "新增『遮蔽物面積計算』按鈕：可在 CAD 圖面或左側清單複選區塊，高亮顯示不同顏色",
-    "右側顯示各區面積、選取面積合計與多邊形聯集面積（扣除重複）",
-    "CSV/JSON 匯出包含遮蔽面積統計及區塊清單；維持原核對尺寸與 DXF 匯出功能",
-    "產房 C 棟北側斜牆自 (60.4713,18.3561) 直線延伸至病死豬運輸通道東側 (62.0476,18.7178)，新增界線約 1.617m",
-    "修正病死豬通道北界與東界的整面尺寸核對端點；其兩筆舊核定值封存不自動套用",
-    "原始 2026-11-11 DXF 另存於 cad/reference；代書匯出 DXF 新增一條線，保留原有 1,116 個圖元",
-    "不同 CAD 來源雜湊時仍可安全讀取上一版尺寸 JSON，其餘已核尺寸與自訂區塊保留"
-  ],
-  "revision": "r11-bathroom1-east-corridor",
-  "notes": "Bathroom1 separately selectable at east end of middle/lower gestation houses, provisional walls, CAD DXF synchronised, previous audited corridor edges archived on migration."
+  "version": "1.7.1",
+  "official": false,
+  "calibration": {
+    "ids": [
+      "midFarrow",
+      "A",
+      "B",
+      "D",
+      "C",
+      "westFarrow",
+      "boar",
+      "westLong",
+      "giltBreedWhole",
+      "gestTop",
+      "gestBL",
+      "gestBR",
+      "east1",
+      "east2",
+      "east3",
+      "bath1"
+    ],
+    "rawNet": 3603.2901412197034,
+    "target": 3573.75,
+    "factor": 0.9918018976929501,
+    "landArea": 4089,
+    "land": [
+      [
+        -3.335039961409783,
+        3.7738193831687292
+      ],
+      [
+        -1.841,
+        4.1153
+      ],
+      [
+        62.0476,
+        18.7178
+      ],
+      [
+        62.57,
+        40.37278969179715
+      ],
+      [
+        60.693,
+        40.36927261825292
+      ],
+      [
+        60.693,
+        74.42179897364267
+      ],
+      [
+        -1.9175,
+        74.30448105508057
+      ],
+      [
+        -3.4115399614097828,
+        74.30168156204792
+      ]
+    ],
+    "rawLandArea": 4019.998442325,
+    "anchor": [
+      -1.841,
+      4.1153
+    ],
+    "slope": 0.22856190306251817
+  },
+  "landRatio": "scope-specific selected shelter union; planning only",
+  "landAudit": "South boundary flush with building; west drain estimated",
+  "ratioBasis": {
+    "default": "combined",
+    "included1230": 66,
+    "method": "shared area accounting; geometry unchanged; prorated assumed included 66 m²"
+  },
+  "interface": "smart labels, quick focus, area in m² and ping; pointer gestures, responsive landscape panel, map-only mode; print and share SVG/PNG, A3/A4 portrait/landscape; adaptive shape-aware label arrangement",
+  "defaultLabelScale": 0.85,
+  "audit": "Regression testing: shared trial values, label NaN, calculation settings persistence/export and import",
+  "releaseStatus": "stable application candidate; survey and device acceptance pending",
+  "entryPoint": "index.html"
 }

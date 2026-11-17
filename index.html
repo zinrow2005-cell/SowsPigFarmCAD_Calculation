@@ -1,104 +1,117 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="zh-Hant">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5" />
-  <meta name="theme-color" content="#f4f8f8" />
-  <title>虎尾豬場｜CAD 尺寸核對與代書交付工作台 V1.2.5</title>
-  <link rel="stylesheet" href="assets/app.css" />
-</head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,maximum-scale=5" name="viewport"/>
+<meta content="#f4f8f8" name="theme-color"/>
+<title>虎尾畜牧場｜CAD 圖面查詢 V1.7.2</title>
+<link href="assets/app.css" rel="stylesheet"/>
+<link href="assets/simple-ui.css" rel="stylesheet"/><link href="assets/share.css" rel="stylesheet"/></head>
 <body>
 <div id="app">
-  <header class="app-header">
-    <div class="brand"><span class="brand-logo">▤</span><div><strong>虎尾豬場 · 尺寸核對與 CAD 交付 V1.2.5</strong><small>牆線尺寸核對 × 遮蔽物面積複選統計 × DXF 交付</small></div></div>
-    <div class="header-actions">
-      <span class="source-pill" title="原始檔案由使用者提供">CAD 原圖＋11-12 補線／浴室1 · 公尺</span>
-      <button type="button" class="btn ghost" id="btnExportCsv" title="可用 Excel 開啟">匯出 CSV</button>
-      <button type="button" class="btn ghost" id="btnImport">匯入核對 JSON</button>
-      <input hidden id="inputImport" type="file" accept=".json,application/json" />
-      <button type="button" class="btn primary" id="btnExportDxf">↓ 匯出代書 DXF</button><button type="button" class="btn ghost" id="btnExport">核對 JSON</button>
-    </div>
-  </header>
-  <div id="exportFeedback" class="export-feedback" role="status" aria-live="polite" hidden></div>
-  <nav class="mobile-nav" aria-label="工作區切換">
-    <button type="button" data-mobile="left">☷ 區塊清單</button>
-    <button type="button" class="active" data-mobile="center">⌖ CAD 圖面</button>
-    <button type="button" data-mobile="right" id="mobileRightTab">✎ 尺寸資料</button>
-  </nav>
-  <main class="workspace">
-    <aside class="panel left" id="leftPanel">
-      <div class="panel-header"><div><span class="eyebrow">01 · 區塊與牆段</span><h2>全場核對清單</h2></div><span class="small-stat" id="regionTotal"></span></div>
-      <div class="search-wrap"><span>⌕</span><input id="search" type="search" placeholder="搜尋產房、走道、牆線、編號…" autocomplete="off" aria-label="搜尋區塊與牆線" /></div>
-      <div class="quick-actions">
-        <button type="button" data-jump="B">產房 B 棟</button>
-        <button type="button" data-jump="bath2">浴室 2／三角區</button><button type="button" data-jump="bath1">浴室1</button>
-        <button type="button" data-jump="giltBreedWhole">新女豬＋配種整棟</button>
-        <button type="button" data-jump="westLong">西側縱向走道</button>
-        <button type="button" data-jump="samplePass">採精／儲物走道</button>
-        <button type="button" data-jump="laundry">麻布袋洗曬區</button>
-        <button type="button" data-wall="w_21_0">A 棟左外牆</button>
-      </div>
-      <div class="list-subhead"><span>區塊與牆線</span><button type="button" id="btnWallList">切換全部牆段</button></div>
-      <div class="region-list" id="regionList" aria-label="區塊與牆線清單"></div>
-      <div class="left-footer"><div id="progressText"></div><div class="progress-track"><div id="progressFill"></div></div><small>核對狀態儲存在此瀏覽器；交付代書請匯出 DXF 與 JSON。</small></div>
-    </aside>
-    <section class="canvas-panel" id="centerPanel" aria-label="互動式 CAD 圖面">
-      <div class="map-toolbar">
-        <div class="map-heading"><strong>CAD 原圖 · 丈量核對</strong><span>公尺（m） · 牆段量測含門洞，但不封閉門洞</span></div>
-        <div class="map-actions">
-          <label class="toggle"><input type="checkbox" id="toggleReference" /> 舊圖文字</label><label class="toggle" title="預設優先選整面牆，包含中間門洞；取消後可點選 DXF 原圖短牆段"><input type="checkbox" id="selectWholeSides" checked /> 整面邊線（含門）</label>
-          <label class="toggle"><input type="checkbox" id="toggleDims" checked /> 選取尺寸</label>
-          <button type="button" id="toggleCoverage" class="btn small coverage-toggle" aria-pressed="false">▧ 遮蔽物面積計算</button>
-          <button type="button" id="addWall" class="btn small">＋ 補畫牆段</button>
-          <button type="button" id="addRegion" class="btn small">＋ 補畫區塊</button>
-          <button type="button" id="finishDrawing" class="btn small" hidden>完成框選</button>
-          <button type="button" id="zoomOut" class="btn square">−</button>
-          <button type="button" id="zoomIn" class="btn square">＋</button>
-          <button type="button" id="fit" class="btn small">全場</button>
-        </div>
-      </div>
-      <div class="canvas-notice" id="notice"><span class="notice-dot">i</span> 採精／儲物走道位於兩房間之間；病死豬通道北線已補齊；下方橫向走道東端另設浴室1（尺寸／門位待核）。整面牆長<strong>包含門洞寬度</strong>，只有轉角才拆成多段；CAD 幾何值不是現場實測。</div>
-      <div class="coverage-strip" id="coverageStrip" hidden>
-        <span><strong>遮蔽物面積複選模式</strong> · 點選區塊加入／取消，已選範圍以顏色標示</span>
-        <b id="coverageStripTotal">0 區 · 0.00 m²</b>
-        <button type="button" id="coverageViewResult" class="btn small">查看統計</button>
-      </div>
-      <div class="cad-viewport" id="cadViewport">
-        <svg id="cadSvg" viewBox="-4 0 72 79" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="互動 CAD 圖面，點選區塊或牆段可編輯尺寸">
-          <g id="cadBase"></g><g id="regionOverlay"></g><g id="edgeOverlay"></g><g id="wallOverlay"></g><g id="selectedOverlay"></g>
-        </svg>
-        <div class="drawing-tip" id="drawingTip" hidden>點選第 1 個端點，再點第 2 個端點建立待核牆段。按 Esc 取消。</div>
-        <div class="view-scale"><span class="scale-bar"></span> CAD m <span id="zoomLabel">100%</span></div>
-      </div>
-      <footer class="map-footer"><span><i class="legend-line cad"></i> CAD 外牆</span><span><i class="legend-line inner"></i> 隔牆／走道界</span><span><i class="legend-box selected"></i> 選取區域</span><span><i class="legend-box verified"></i> 已核對</span><span class="map-footer-tip">滾輪縮放 · 拖曳平移 · 點牆線核對</span></footer>
-    </section>
-    <aside class="panel right" id="rightPanel">
-      <div class="panel-header"><div><span class="eyebrow" id="rightEyebrow">02 · 尺寸填寫與核定</span><h2 id="rightHeading">區塊資料</h2></div><span class="status-pill" id="rightStatus">待核對</span></div>
-      <div class="right-scroll" id="rightScroll" aria-label="尺寸資料與代書交付，可向下捲動">
-      <div class="coverage-panel" id="coveragePanel" hidden>
-         <div class="coverage-intro"><strong>遮蔽物面積計算</strong><p>點選 CAD 中要納入遮蔽範圍的棟舍或區塊；再次點選即可取消。只計所選區塊，原始 CAD 幾何及牆長核定值均不變。</p></div>
-         <div class="coverage-totals"><div><span>扣除重疊後的面積</span><strong id="coverageNet">0.00 <small>m²</small></strong></div><div><span>各區面積合計</span><strong id="coverageGross">0.00 m²</strong></div><div><span>重複涵蓋面積</span><strong id="coverageOverlap">0.00 m²</strong></div><div><span>已選區塊</span><strong id="coverageCount">0 區</strong></div></div>
-         <div class="coverage-footnote">計算依 CAD 的多邊形幾何投影，已扣除區塊重疊；這不等於建築執照或法規認定的實際遮蔽／建蔽面積。請核對遮蔽範圍及現場屋頂外緣。</div>
-         <div class="coverage-item-head"><strong>納入計算的區塊</strong><button type="button" id="coverageClear" class="btn small ghost">清空選取</button></div>
-         <div id="coverageSelectedList" class="coverage-selected-list"></div>
-         <div class="coverage-actions"><button type="button" class="btn primary full" id="coverageDownload">↓ 匯出面積核對 CSV</button><button type="button" class="btn full" id="coverageExit">完成複選・返回尺寸</button></div>
-       </div>
-       <div class="details" id="detailPanel"></div>
-      <div class="right-footer">
-        <details class="handover-box" id="handoverDetails"><summary><span class="handover-title">交付代書 · CAD 圖面</span><span class="handover-description">展開匯出設定（核對尺寸時可保持收合）</span></summary><div class="handover-body"><p>保留全部原圖牆線及門洞；核對後的整面牆長以<b>獨立 CAD 尺寸參考層</b>輸出，不會擅自拉伸牆線或封門。</p>
-        <label><input type="checkbox" id="includePendingDxf"/> 另外加入尚未核對的尺寸（橘色、標示 PEND）</label>
-        <label><input type="checkbox" id="includeSourceWalls"/> 加入原圖短牆段的已核尺寸（可能與整面牆重複）</label>
-        <label><input type="checkbox" id="onlyCurrentArea"/> 只輸出目前區塊的尺寸標註（原 CAD 底圖仍完整）</label>
-        <button type="button" class="btn primary full" id="btnDownloadDxf">↓ 下載可編輯 DXF（含核對尺寸）</button><small id="dxfExportStatus">DXF 圖層：HW_VERIFIED_DIM（已核）、HW_PENDING_DIM（待核）、HW_FIELD_SKETCH（補畫參考）。</small></div></details>
-        <button type="button" id="btnCopy" class="btn full">複製核對摘要（貼回聊天室）</button><button type="button" id="btnSave" class="btn primary full">下載目前全部核對結果</button><small>修改會即時保存在本機；請把 JSON 上傳到這段對話，我就能依核對資料調整 CAD 尺寸。</small></div>
-      </div>
-    </aside>
-  </main>
-  <dialog id="regionDialog" class="region-dialog"><form method="dialog" id="regionForm"><h3>建立遺漏的區塊</h3><p>只建立核對用區域，不會修改原始 CAD。</p><label>區塊名稱<input id="regionName" placeholder="例如：採精室左側短走道" maxlength="70" required /></label><label>放入清單分類<select id="regionGroup"><option value="走道">走道與進出動線</option><option value="產房">產房</option><option value="附屬">附屬空間</option><option value="育成">新女豬及配種區</option><option value="妊娠">妊娠舍</option><option value="外圍">周界及其他</option></select></label><div class="dialog-actions"><button type="button" id="cancelRegion" class="btn">取消</button><button type="submit" class="btn primary">確認新增區塊</button></div></form></dialog><div class="toast" id="toast" role="status" aria-live="polite"></div>
+<header class="app-header">
+<div class="brand"><span class="brand-logo">▤</span><div><strong>虎尾畜牧場｜CAD 圖面查詢</strong><small>V1.7.2 · 尺寸與面積</small></div></div>
+<div class="header-actions">
+
+
+
+
+
+<details class="compact-menu"><summary>匯出</summary><div class="menu-body"><button class="btn primary" id="shareOpen" type="button">圖面列印與分享</button><button class="btn ghost" id="btnExportCsv" title="可用 Excel 開啟" type="button">匯出 CSV</button><button class="btn ghost" id="btnImport" type="button">匯入核對 JSON</button><input accept=".json,application/json" hidden="" id="inputImport" type="file"/><button class="btn primary" id="btnExportDxf" type="button">↓ 匯出代書 DXF</button><button class="btn ghost" id="btnExport" type="button">核對 JSON</button></div></details></div>
+</header>
+<div aria-live="polite" class="export-feedback" hidden="" id="exportFeedback" role="status"></div>
+<nav aria-label="工作區切換" class="mobile-nav engine-control">
+<button data-mobile="left" type="button">☷ 區塊清單</button>
+<button class="active" data-mobile="center" type="button">⌖ CAD 圖面</button>
+<button data-mobile="right" id="mobileRightTab" type="button">✎ 尺寸資料</button>
+</nav>
+<main class="workspace">
+<aside class="panel left" id="leftPanel">
+<div class="panel-header"><div><span class="eyebrow">01 · 區塊與牆段</span><h2>搜尋區塊</h2></div><span class="small-stat" id="regionTotal"></span><button class="btn small" id="closeList" type="button">關閉</button></div>
+<div class="search-wrap"><span>⌕</span><input aria-label="搜尋區塊與牆線" autocomplete="off" id="search" placeholder="搜尋產房、走道、牆線、編號…" type="search"/></div>
+<div class="quick-actions advanced-only">
+<button data-jump="B" type="button">產房 B 棟</button>
+<button data-jump="bath2" type="button">浴室 2／三角區</button><button data-jump="bath1" type="button">浴室1</button>
+<button data-jump="giltBreedWhole" type="button">新女豬＋配種整棟</button>
+<button data-jump="westLong" type="button">西側縱向走道</button>
+<button data-jump="samplePass" type="button">採精／儲物走道</button>
+<button data-jump="laundry" type="button">麻布袋洗曬區</button>
+<button data-wall="w_21_0" type="button">A 棟左外牆</button>
+</div>
+<div class="list-subhead"><span>區塊與牆線</span><button class="advanced-only" id="btnWallList" type="button">切換全部牆段</button></div>
+<div aria-label="區塊與牆線清單" class="region-list" id="regionList"></div>
+<div class="left-footer advanced-only"><div id="progressText"></div><div class="progress-track"><div id="progressFill"></div></div><small>核對狀態儲存在此瀏覽器；交付代書請匯出 DXF 與 JSON。</small></div>
+</aside>
+<section aria-label="互動式 CAD 圖面" class="canvas-panel" id="centerPanel">
+<div class="map-toolbar"><div class="mode-tabs"><button class="btn small" id="modeQuery" type="button">圖面查詢</button><button class="btn small" id="modeArea" type="button">面積計算</button><button class="btn small" id="modeRatio" type="button">空地比</button></div>
+
+<div class="map-actions"><button class="btn small" id="openList" type="button">搜尋</button><button class="btn small" id="openInfo" type="button">資料</button>
+
+
+<button aria-pressed="false" class="btn small coverage-toggle engine-control" id="toggleCoverage" type="button">▧ 遮蔽・空地比計算</button>
+
+
+<button class="btn small" hidden="" id="finishDrawing" type="button">完成框選</button>
+<button class="btn square" id="zoomOut" type="button">−</button>
+<button class="btn square" id="zoomIn" type="button">＋</button>
+<button class="btn small" id="fit" type="button">全場</button><button class="btn small" id="fullMap" aria-pressed="false" type="button">全螢幕</button><select id="quickFocus" aria-label="快速定位"><option value="">快速定位</option><option value="farrow">產房區</option><option value="boar">公豬舍</option><option value="gilt">育成配種區</option><option value="gest">妊娠舍</option><option value="new">1230 地號</option></select>
+<details class="compact-menu"><summary>顯示設定</summary><div class="menu-body"><label class="toggle"><input checked="" id="toggleLabels" type="checkbox"/> 圖面文字</label><label class="toggle">標示內容 <select id="labelContent"><option value="name">名稱</option><option value="area">面積</option><option value="both">名稱＋面積</option><option value="none">純圖面</option></select></label><label class="toggle">文字排版 <select id="labelArrangement"><option value="smart">智慧（預設）</option><option value="short">簡潔</option><option value="full">完整</option><option value="none">隱藏</option></select></label><label class="toggle"><input id="smartDims" type="checkbox" checked/> 智慧防重疊</label><label class="toggle"><input id="toggleReference" type="checkbox"/> 舊圖文字</label><label class="toggle"><input checked="" id="toggleDims" title="顯示目前選取區塊或遮蔽複選區塊的邊長" type="checkbox"/> 選取尺寸</label><label class="toggle cad-font-control">圖面字體 <select aria-label="圖面字體大小" id="cadFontSize"><option selected="" value="0.85">小</option><option value="1">標準</option><option value="1.25">大</option><option value="1.5">特大</option></select></label><label class="toggle" title="預設優先選整面牆，包含中間門洞；取消後可點選 DXF 原圖短牆段"><input checked="" id="selectWholeSides" type="checkbox"/> 整面邊線（含門）</label><button class="btn small" id="parcelToggle" type="button">▱ 隱藏新增土地</button><button class="btn small" id="parcelFit" type="button">查看新土地</button></div></details><details class="compact-menu"><summary>進階</summary><div class="menu-body"><button class="btn small" id="advancedToggle" type="button">開啟尺寸核對</button><button class="btn small" id="addWall" type="button">＋ 補畫牆段</button><button class="btn small" id="addRegion" type="button">＋ 補畫區塊</button></div></details></div>
+</div>
+<div class="canvas-notice advanced-only" id="notice"><span class="notice-dot">i</span> 採精／儲物走道位於兩房間之間；病死豬通道北線已補齊；下方橫向走道東端另設浴室1（尺寸／門位待核）。整面牆長<strong>包含門洞寬度</strong>，只有轉角才拆成多段；CAD 幾何值不是現場實測。</div>
+<div class="coverage-strip compact-strip" hidden="" id="coverageStrip">
+<span><strong>複選區塊</strong> · 點擊加入／取消</span>
+<b id="coverageStripTotal">0 區 · 0.00 m²</b>
+<button class="btn small" id="coverageViewResult" type="button">查看統計</button>
+</div>
+<div class="canvas-notice advanced-only" style="font-size:12px">1231＋1230-1：登記合計 4,089 m²；外框為面積約束推估，非正式界址。幾何校正仍保留 V1.5.7；面積與空地比共用代書試算基準，待代書確認。</div><div class="cad-viewport" id="cadViewport">
+<svg aria-label="互動 CAD 圖面，點選區塊或牆段可編輯尺寸" id="cadSvg" preserveaspectratio="xMidYMid meet" role="img" viewbox="-4 0 72 79" xmlns="http://www.w3.org/2000/svg">
+<g id="cadBase"></g><g id="calibrationBoundary" pointer-events="none"></g><g id="parcelOverlay"></g><g id="layout1230Overlay"></g><g id="regionOverlay"></g><g id="landAuditOverlay" pointer-events="none"></g><g id="edgeOverlay"></g><g id="wallOverlay"></g><g id="selectedOverlay"></g>
+</svg>
+<div class="drawing-tip" hidden="" id="drawingTip">點選第 1 個端點，再點第 2 個端點建立待核牆段。按 Esc 取消。</div>
+<div id="hoverRegion" class="hover-region" hidden></div><div class="view-scale"><span class="scale-bar"></span> CAD m <span id="zoomLabel">100%</span></div>
+</div>
+<footer class="map-footer">基地 4,765 m²（不含1226） · 規劃參考，非正式界址或實測</footer>
+</section>
+<aside class="panel right" id="rightPanel">
+<div class="panel-header"><div><span class="eyebrow" id="rightEyebrow">圖面資料</span><h2 id="rightHeading">區塊資料</h2></div><span class="status-pill" id="rightStatus">待核對</span><button class="btn small" id="closeInfo" type="button">收起</button></div>
+<div aria-label="尺寸資料與代書交付，可向下捲動" class="right-scroll" id="rightScroll">
+<div class="coverage-panel" hidden="" id="coveragePanel">
+
+<div class="coverage-totals"><div><span>統一試算面積</span><strong id="coverageNet">0.00 <small>m²</small></strong></div><div><span>各區幾何面積合計</span><strong id="coverageGross">0.00 m²</strong></div><div><span>重複涵蓋面積</span><strong id="coverageOverlap">0.00 m²</strong></div><div><span>幾何聯集</span><strong id="coverageGeometry">—</strong></div><div><span>代書基準調整</span><strong id="coverageDeduction">—</strong></div><div><span>已選區塊</span><strong id="coverageCount">0 區</strong></div></div>
+<details class="inline-details"><summary>幾何校正與計算依據</summary><div class="coverage-footnote"><label><input checked="" id="calibrationToggle" type="checkbox"/> 使用代書總面積比例校正（推算）</label><br/><button class="btn small" id="calibrationPreset" type="button">選取原母豬場 16 區</button><br/><label>代書計算基準（待確認）<select id="ratioBasis"><option selected="" value="combined">3,573.75 已含1230原估66 m²</option><option value="old">3,573.75 僅原母豬場</option></select></label><small>原估：玉米倉36＋管理室7.5＋冷藏室7.5＋堆肥舍15＝66 m²。此修正共用於面積及空地比試算，不更動CAD幾何；取消比例校正則使用原始CAD。</small><br/><span id="calibrationSummary"></span><br/>計算依 CAD 多邊形聯集，再套用共同代書基準；空地比另排除空地及範圍外區塊。這不等於建築執照或法規認定的實際遮蔽／建蔽面積。請核對遮蔽範圍及現場屋頂外緣。</div></details>
+<section aria-label="空地比試算" class="ratio-panel">
+<strong>基地遮蔽與空地比</strong><label>計算土地範圍<select id="ratioScope"><option value="old">原母豬場（4,089 m²）</option><option value="new">1230 地號（676 m²）</option><option selected="" value="all">合併基地（4,765 m²）</option></select></label>
+
+<div class="ratio-preset"><button class="btn small" id="ratioOld" type="button">原場16區</button><button class="btn small" id="ratioNew" type="button">1230七項設施</button><button class="btn small" id="ratioAll" type="button">合併情境</button></div>
+<div class="ratio-kpis"><div>基地面積<b id="ratioLand">—</b></div><div>選取遮蔽面積<b id="ratioCovered">—</b></div><div>剩餘未遮蔽面積<b id="ratioFree">—</b></div><div>空地比<b id="ratioFreePct">—</b></div><div>遮蔽率<b id="ratioPct">—</b></div><div>可新增遮蔽額度<b id="ratioAllowance">—</b></div></div>
+<div aria-hidden="true" class="ratio-bar"><span id="ratioFill"></span><i id="ratioMark"></i></div><div id="ratioStatus" role="status"></div><small id="ratioExcluded"></small><small>空地比＝（基地面積－試算遮蔽面積）÷基地面積。未選區暫視為未遮蔽；空地區域及1226水利地不計遮蔽。七項設施快捷鍵僅為假設全有遮蔽的情境。比例上限可自行設定，非主管機關認定；合併基地須確認可依法合併使用。</small>
+<details class="inline-details"><summary>試算明細與上限設定</summary><div><div class="ratio-kpis"><div>原場選取（試算）<b id="ratioOldArea">—</b></div><div>1230選取設施<b id="ratioNewArea">—</b></div><div>已含面積調整<b id="ratioDeduction">—</b></div><div>調整前選取聯集<b id="ratioBefore">—</b></div></div><small id="ratioBasisNote"></small><label>遮蔽率上限（試算 %）<input id="ratioLimit" max="100" min="0" step="0.1" type="number" value="80"/></label></div></details></section>
+<details class="inline-details advanced-only"><summary>基地完整性核對</summary><section class="ratio-panel land-audit-panel"><strong>全基地面積核對（非遮蔽統計）</strong><small>依上方基地範圍及校正設定，核對全部既有區塊（含西側自有地水溝），不受目前選取限制，也不改動遮蔽選取。</small><div class="ratio-kpis"><div>基地外框<b id="auditLand">—</b></div><div>已分區（界內）<b id="auditAssigned">—</b></div><div>尚未分區（界內）<b id="auditGap">—</b></div><div>既有區塊超出外框<b id="auditOutside">—</b></div><div>已分區＋未分區<b id="auditTotal">—</b></div><div>目前選取（界內）<b id="auditSelected">—</b></div></div><button aria-pressed="false" class="btn small full" id="auditToggle" type="button">在圖上標示未分區與超界</button><small hidden="" id="auditLegend">黃色斜線：外框內未分區；紅色：既有區塊超出推估界線。兩者均待核對，不自動認定為空地或遮蔽。1226 水利地不計入基地。</small></section></details><div class="coverage-item-head"><strong>納入計算的區塊</strong><button class="btn small ghost" id="coverageClear" type="button">清空</button></div>
+<div class="selection-toolbar"><strong>已選區塊</strong><button class="btn small" id="selectAllRegions" type="button">全部區塊</button></div><div class="coverage-selected-list" id="coverageSelectedList"></div>
+<div class="coverage-actions"><button class="btn primary full" id="coverageDownload" type="button">↓ 匯出面積核對 CSV</button><button class="btn full" id="coverageExit" type="button">返回圖面查詢</button></div>
+</div>
+<div class="details" id="detailPanel"></div>
+<div class="right-footer advanced-only">
+<details class="handover-box" id="handoverDetails"><summary><span class="handover-title">交付代書 · CAD 圖面</span><span class="handover-description">展開匯出設定（核對尺寸時可保持收合）</span></summary><div class="handover-body"><p>保留全部原圖牆線及門洞；核對後的整面牆長以<b>獨立 CAD 尺寸參考層</b>輸出，不會擅自拉伸牆線或封門。</p>
+<label><input id="includePendingDxf" type="checkbox"> 另外加入尚未核對的尺寸（橘色、標示 PEND）</input></label>
+<label><input id="includeSourceWalls" type="checkbox"> 加入原圖短牆段的已核尺寸（可能與整面牆重複）</input></label>
+<label><input id="onlyCurrentArea" type="checkbox"/> 只輸出目前區塊的尺寸標註（原 CAD 底圖仍完整）</label>
+<button class="btn primary full" id="btnDownloadDxf" type="button">↓ 下載可編輯 DXF（含核對尺寸）</button><small id="dxfExportStatus">DXF 圖層：HW_VERIFIED_DIM（已核）、HW_PENDING_DIM（待核）、HW_FIELD_SKETCH（補畫參考）。</small></div></details>
+<button class="btn full" id="btnCopy" type="button">複製核對摘要（貼回聊天室）</button><button class="btn primary full" id="btnSave" type="button">下載目前全部核對結果</button><small>修改會即時保存在本機；請把 JSON 上傳到這段對話，我就能依核對資料調整 CAD 尺寸。</small></div>
+</div>
+</aside>
+</main>
+<dialog class="region-dialog" id="regionDialog"><form id="regionForm" method="dialog"><h3>建立遺漏的區塊</h3><p>只建立核對用區域，不會修改原始 CAD。</p><label>區塊名稱<input id="regionName" maxlength="70" placeholder="例如：採精室左側短走道" required=""/></label><label>放入清單分類<select id="regionGroup"><option value="走道">走道與進出動線</option><option value="產房">產房</option><option value="附屬">附屬空間</option><option value="育成">新女豬及配種區</option><option value="妊娠">妊娠舍</option><option value="外圍">周界及其他</option></select></label><div class="dialog-actions"><button class="btn" id="cancelRegion" type="button">取消</button><button class="btn primary" type="submit">確認新增區塊</button></div></form></dialog><div aria-live="polite" class="toast" id="toast" role="status"></div>
 </div>
 <script src="assets/cad-model.js"></script>
 <script src="assets/cad-source.js"></script>
 <script src="assets/dxf-export.js"></script>
+<script src="assets/calibration.js"></script>
+<script src="assets/land-audit-data.js"></script>
 <script src="assets/app.js"></script>
-</body>
+<script src="assets/parcels.js"></script>
+<script src="assets/layout1230.js"></script>
+<script src="assets/cad-labels.js"></script><script src="assets/smart-labels.js"></script>
+<script src="assets/simple-ui.js"></script><section id="sharePanel" hidden role="dialog" aria-modal="true" aria-labelledby="shareTitle"><div class="share-card"><header><h2 id="shareTitle">圖面列印與分享</h2><button class="btn" id="shareClose">關閉</button></header><div class="share-controls"><label>圖面範圍<select id="shareScope"><option value="full">全場（依目前圖層）</option><option value="view">目前視野</option></select></label><label>紙張<select id="sharePaper"><option>A4</option><option>A3</option></select></label><label>方向<select id="shareOrientation"><option value="landscape">橫式</option><option value="portrait">直式</option></select></label><label>附加資訊<select id="shareStats"><option value="none">純圖面</option><option value="area">目前選取面積</option><option value="ratio">目前空地比試算</option></select></label></div><p class="share-note">沿用目前圖層、文字及尺寸顯示。若需標註尺寸，請先在圖面選取區塊並開啟尺寸。未選區不代表現場無遮蔽。圖面為規劃參考，非正式界址或實測。</p><div id="sharePreview"></div><p id="shareStatus" role="status"></p><footer><button class="btn" id="shareSvg">下載 SVG</button><button class="btn" id="sharePng">下載 PNG</button><button class="btn primary" id="sharePrint">列印／另存 PDF</button></footer></div></section><div id="printSheet" aria-hidden="true"></div><script src="assets/share.js"></script></body>
 </html>

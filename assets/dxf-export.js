@@ -9,11 +9,13 @@ const digits=v=>Number(v).toFixed(4).replace(/0+$/,'').replace(/\.$/,'')||'0';
 const f=n=>String(Number(n).toFixed(3));
 function originalText(){const bin=atob(source);const bytes=new Uint8Array(bin.length);for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);return new TextDecoder('utf-8',{fatal:true}).decode(bytes);}
 const lf=s=>s.replace(/\r\n/g,'\n');
-const layerCode=[
+const layerCode=[["HW_CALIBRATED_ESTIMATE",2],["HW_LAND_4089_ESTIMATE",6],
  ['HW_VERIFIED_DIM',3],       // green: verified by user, geometry unchanged
  ['HW_PENDING_DIM',30],       // orange: NOT field-verified
  ['HW_FIELD_SKETCH',4],       // user sketched line, not a built wall
- ['HW_DIM_INFO',8]           // other supporting reference labels
+ ['HW_DIM_INFO',8],
+ ['HW_PARCEL_1230_DRAFT',30],
+ ['HW_WATER_1226_DRAFT',5],['HW_PARCEL_DIM', 6],['HW_1230_LAYOUT_REF', 140]           // other supporting reference labels
 ];
 const dxfLayer=([name,color])=>`0\nLAYER\n2\n${name}\n70\n0\n62\n${color}\n6\nCONTINUOUS\n`;
 const xy=p=>[p[0],-p[1]]; // SVG measurement Y-down -> original DXF Y-up
@@ -55,10 +57,37 @@ function makeFile(opts={}){
   if(w.status==='verified'&&Number(w.value)>0)add({...w,prefix:'REF '+(w.prefix||'')},'HW_VERIFIED_DIM',0.36);
   else if(opts.includePending&&Number(w.value)>0)add({...w,prefix:'SKETCH '+(w.prefix||'')},'HW_PENDING_DIM',0.44);
  }
+ // Editable cadastral reference polygons. Never added to building coverage totals.
+ for(const p of (opts.parcels||[])){
+  if(!Array.isArray(p.points)||p.points.length<3||!p.points.every(pt=>Array.isArray(pt)&&pt.length===2&&pt.every(Number.isFinite)))continue;
+  const layer=p.id==='p1226'?'HW_WATER_1226_DRAFT':'HW_PARCEL_1230_DRAFT';
+  for(let i=0;i<p.points.length;i++){const a=p.points[i],b=p.points[(i+1)%p.points.length];entities+=line(a,b,layer);entities+=dim({a,b,value:Math.hypot(b[0]-a[0],b[1]-a[1]),prefix:`P${i+1}-P${(i+1)%p.points.length+1} `},"HW_PARCEL_DIM",.6);}
+  const c=[p.points.reduce((a,b)=>a+b[0],0)/p.points.length,p.points.reduce((a,b)=>a+b[1],0)/p.points.length];
+  entities+=textEntity(c,p.id==='p1226'?'1226地號(水利地).溝寬4M':'1230地號(676平方米)',0.85,0,layer);
+ }
+
+ const layout=(window.HUWEI_1230_LAYOUT&&window.HUWEI_1230_LAYOUT.getData)?window.HUWEI_1230_LAYOUT.getData():[];
+ for(const [a,b] of (window.HUWEI_1230_LAYOUT?.getLines?.()||[]))entities+=line(a,b,'HW_1230_LAYOUT_REF');
+ for(const z of layout){
+  if(z.id.endsWith("_open"))continue;
+  if(!Array.isArray(z.points)||z.points.length<3) continue;
+  
+  const c=[z.points.reduce((a,b)=>a+b[0],0)/z.points.length,z.points.reduce((a,b)=>a+b[1],0)/z.points.length];
+  entities+=textEntity(c,`${z.name} ${z.area}`,0.55,0,'HW_1230_LAYOUT_REF');
+ }
+
+ const cal=window.HUWEI_CALIBRATION;
+ if(cal){for(const q of cal.regions){for(const ring of [q.points,...(q.holes||[])])for(let i=0;i<ring.length;i++)entities+=line(ring[i],ring[(i+1)%ring.length],'HW_CALIBRATED_ESTIMATE');}for(let i=0;i<cal.land.length;i++)entities+=line(cal.land[i],cal.land[(i+1)%cal.land.length],'HW_LAND_4089_ESTIMATE');entities+=textEntity([8,cal.land[5][1]-.6],'1231 + 1230-1 / 4089 m2 ESTIMATE - NOT SURVEY',.6,0,'HW_LAND_4089_ESTIMATE');entities+=textEntity([8,42],'CALIBRATED FOOTPRINTS / ESTIMATE ONLY',.6,0,'HW_CALIBRATED_ESTIMATE');}
  const tail=text.lastIndexOf('0\nENDSEC\n0\nEOF');
  const entStart=text.indexOf('0\nSECTION\n2\nENTITIES\n');
  if(tail<entStart)throw Error('無法安全找到 ENTITIES 尾端');
  text=text.slice(0,tail)+entities+text.slice(tail);
+ // Assign explicit non-conflicting handles to sparse source records and appended entities.
+ const rows=text.trimEnd().split('\n'), pairs=[]; for(let i=0;i<rows.length;i+=2)pairs.push([rows[i],rows[i+1]]);
+ let next=Math.max(0x100000,...pairs.filter(p=>p[0].trim()==='5').map(p=>parseInt(p[1],16)||0))+1;
+ const records=[];for(const p of pairs){if(p[0].trim()==='0'||!records.length)records.push([]);records[records.length-1].push(p);}
+ for(const rec of records){const type=rec[0][1].trim();if(!['SECTION','ENDSEC','ENDTAB','EOF'].includes(type)&&!rec.some(p=>p[0].trim()==='5'))rec.splice(type==='TABLE'?2:1,0,['5',(next++).toString(16).toUpperCase()]);}
+ text=records.flat().flat().join('\n')+'\n';
  text=text.replace(/\n/g,'\r\n');
  return {text,stats,bytes:new TextEncoder().encode(text)};
 }

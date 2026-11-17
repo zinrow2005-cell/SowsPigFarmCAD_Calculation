@@ -1,0 +1,33 @@
+V1.7.0 驗收紀錄
+Chromium 內嵌頁面自動化測試
+合併23區一致性：PASS
+原場16區：PASS
+1230七區：PASS
+切換代書基準：PASS
+關閉校正模式：PASS
+上限與無效值：PASS
+逐項移除：PASS
+範圍篩選：PASS
+全選、排除空地、清空：PASS
+搜尋、單區、邊線、加入計算：PASS
+快速定位與縮放：PASS
+標示四模式、字體、圖層與尺寸：PASS
+新增土地顯示與定位：PASS
+基地完整性標示：PASS
+JSON、CSV、DXF下載及匯入還原：PASS
+重新載入記憶選取及字體（模擬儲存）：PASS
+匯出與匯入試算設定：PASS
+異常JSON拒絕且保留資料：PASS
+進階尺寸輸入及核對匯出：PASS
+補畫牆段、自訂區塊、預設不受干擾：PASS
+手機尺寸、收合、橫直切換：PASS
+
+列印分享測試：
+preview numbers, state PASS
+svg 895367
+png 762886
+A3 portrait, view, print CSS, cleanup PASS
+mobile, pure map, close, unchanged totals PASS []
+
+JavaScript 語法檢查通過；原始 CAD、幾何資料、計算主程式逐檔比對完全相同。
+未驗收：Windows 本機直接開啟、Safari/iOS 實機、實體印表機、第三方 CAD 開檔及實際 PDF 儲存。

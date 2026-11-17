@@ -1,5 +1,5 @@
 {
-  "version": "1.7.1",
+  "version": "1.7.3",
   "official": false,
   "calibration": {
     "ids": [
@@ -76,5 +76,11 @@
   "defaultLabelScale": 0.85,
   "audit": "Regression testing: shared trial values, label NaN, calculation settings persistence/export and import",
   "releaseStatus": "stable application candidate; survey and device acceptance pending",
-  "entryPoint": "index.html"
+  "entryPoint": "index.html",
+  "pwa": {
+    "manifest": "manifest.webmanifest",
+    "offline": "sw.js",
+    "icon": "icons/icon-512.png",
+    "deployment": "HTTPS or localhost"
+  }
 }

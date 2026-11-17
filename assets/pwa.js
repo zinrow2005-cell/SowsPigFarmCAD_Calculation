@@ -1,0 +1,1 @@
+(()=>{'use strict';if(!('serviceWorker' in navigator)||!/^https?:$/.test(location.protocol)||!window.isSecureContext)return;window.addEventListener('load',()=>{navigator.serviceWorker.register('./sw.js',{scope:'./'}).catch(e=>console.warn('PWA offline setup:',e));});})();

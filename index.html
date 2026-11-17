@@ -5,13 +5,19 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width,initial-scale=1,maximum-scale=5" name="viewport"/>
 <meta content="#f4f8f8" name="theme-color"/>
-<title>虎尾畜牧場｜CAD 圖面查詢 V1.7.2</title>
+<title>虎尾畜牧場｜CAD 圖面查詢 V1.7.3</title>
 <link href="assets/app.css" rel="stylesheet"/>
-<link href="assets/simple-ui.css" rel="stylesheet"/><link href="assets/share.css" rel="stylesheet"/></head>
+<link href="assets/simple-ui.css" rel="stylesheet"/><link href="assets/share.css" rel="stylesheet"/><link rel="manifest" href="manifest.webmanifest"/>
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png"/>
+<link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png"/>
+<meta name="apple-mobile-web-app-capable" content="yes"/>
+<meta name="apple-mobile-web-app-title" content="豬場CAD"/>
+<meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+</head>
 <body>
 <div id="app">
 <header class="app-header">
-<div class="brand"><span class="brand-logo">▤</span><div><strong>虎尾畜牧場｜CAD 圖面查詢</strong><small>V1.7.2 · 尺寸與面積</small></div></div>
+<div class="brand"><span class="brand-logo">▤</span><div><strong>虎尾畜牧場｜CAD 圖面查詢</strong><small>V1.7.3 · 尺寸與面積</small></div></div>
 <div class="header-actions">
 
 
@@ -113,5 +119,5 @@
 <script src="assets/parcels.js"></script>
 <script src="assets/layout1230.js"></script>
 <script src="assets/cad-labels.js"></script><script src="assets/smart-labels.js"></script>
-<script src="assets/simple-ui.js"></script><section id="sharePanel" hidden role="dialog" aria-modal="true" aria-labelledby="shareTitle"><div class="share-card"><header><h2 id="shareTitle">圖面列印與分享</h2><button class="btn" id="shareClose">關閉</button></header><div class="share-controls"><label>圖面範圍<select id="shareScope"><option value="full">全場（依目前圖層）</option><option value="view">目前視野</option></select></label><label>紙張<select id="sharePaper"><option>A4</option><option>A3</option></select></label><label>方向<select id="shareOrientation"><option value="landscape">橫式</option><option value="portrait">直式</option></select></label><label>附加資訊<select id="shareStats"><option value="none">純圖面</option><option value="area">目前選取面積</option><option value="ratio">目前空地比試算</option></select></label></div><p class="share-note">沿用目前圖層、文字及尺寸顯示。若需標註尺寸，請先在圖面選取區塊並開啟尺寸。未選區不代表現場無遮蔽。圖面為規劃參考，非正式界址或實測。</p><div id="sharePreview"></div><p id="shareStatus" role="status"></p><footer><button class="btn" id="shareSvg">下載 SVG</button><button class="btn" id="sharePng">下載 PNG</button><button class="btn primary" id="sharePrint">列印／另存 PDF</button></footer></div></section><div id="printSheet" aria-hidden="true"></div><script src="assets/share.js"></script></body>
+<script src="assets/simple-ui.js"></script><section id="sharePanel" hidden role="dialog" aria-modal="true" aria-labelledby="shareTitle"><div class="share-card"><header><h2 id="shareTitle">圖面列印與分享</h2><button class="btn" id="shareClose">關閉</button></header><div class="share-controls"><label>圖面範圍<select id="shareScope"><option value="full">全場（依目前圖層）</option><option value="view">目前視野</option></select></label><label>紙張<select id="sharePaper"><option>A4</option><option>A3</option></select></label><label>方向<select id="shareOrientation"><option value="landscape">橫式</option><option value="portrait">直式</option></select></label><label>附加資訊<select id="shareStats"><option value="none">純圖面</option><option value="area">目前選取面積</option><option value="ratio">目前空地比試算</option></select></label></div><p class="share-note">沿用目前圖層、文字及尺寸顯示。若需標註尺寸，請先在圖面選取區塊並開啟尺寸。未選區不代表現場無遮蔽。圖面為規劃參考，非正式界址或實測。</p><div id="sharePreview"></div><p id="shareStatus" role="status"></p><footer><button class="btn" id="shareSvg">下載 SVG</button><button class="btn" id="sharePng">下載 PNG</button><button class="btn primary" id="sharePrint">列印／另存 PDF</button></footer></div></section><div id="printSheet" aria-hidden="true"></div><script src="assets/share.js"></script><script src="assets/pwa.js"></script></body>
 </html>

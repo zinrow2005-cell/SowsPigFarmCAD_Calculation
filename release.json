@@ -1,5 +1,5 @@
 {
-  "version": "1.7.8",
+  "version": "1.7.9",
   "official": false,
   "calibration": {
     "ids": [
@@ -81,7 +81,8 @@
     "manifest": "manifest.webmanifest",
     "offline": "sw.js",
     "icon": "icons/icon-512.png",
-    "deployment": "HTTPS or localhost"
+    "deployment": "HTTPS or localhost",
+    "updates": "network-first navigation, release polling, active worker upgrade, versioned assets"
   },
   "performance": "Gesture frame coalescing and deferred dimension/label layout; deduplicated candidates and hover calculation"
 }

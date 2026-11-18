@@ -1,5 +1,5 @@
 {
-  "version": "1.7.9",
+  "version": "1.8.3",
   "official": false,
   "calibration": {
     "ids": [
@@ -70,12 +70,12 @@
   "ratioBasis": {
     "default": "combined",
     "included1230": 66,
-    "method": "shared area accounting; geometry unchanged; prorated assumed included 66 m²"
+    "method": "V1.8.3: actual calibrated union reference, old site target 3507.75 (alternate 3573.75), proportional accounting only; new facilities unchanged"
   },
   "interface": "smart labels, quick focus, area in m² and ping; pointer gestures, responsive landscape panel, map-only mode; print and share SVG/PNG, A3/A4 portrait/landscape; adaptive shape-aware label arrangement",
   "defaultLabelScale": 0.85,
   "audit": "Regression testing: shared trial values, label NaN, calculation settings persistence/export and import",
-  "releaseStatus": "stable application candidate; survey and device acceptance pending",
+  "releaseStatus": "planning estimate; no surveyed boundary claim",
   "entryPoint": "index.html",
   "pwa": {
     "manifest": "manifest.webmanifest",
@@ -84,5 +84,6 @@
     "deployment": "HTTPS or localhost",
     "updates": "network-first navigation, release polling, active worker upgrade, versioned assets"
   },
-  "performance": "Gesture frame coalescing and deferred dimension/label layout; deduplicated candidates and hover calculation"
+  "performance": "Gesture frame coalescing and deferred dimension/label layout; deduplicated candidates and hover calculation",
+  "geometryRevision": "V1.8.2: west corridor display and boundary aligned to source CAD west perimeter; west drain assumed 0.8m; full farrowing wall lengths span door openings; B redundant return edge removed; calibrated west coordinates restored; revised land audit"
 }

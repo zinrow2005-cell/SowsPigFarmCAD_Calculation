@@ -63,7 +63,7 @@ function makeFile(opts={}){
   const layer=p.id==='p1226'?'HW_WATER_1226_DRAFT':'HW_PARCEL_1230_DRAFT';
   for(let i=0;i<p.points.length;i++){const a=p.points[i],b=p.points[(i+1)%p.points.length];entities+=line(a,b,layer);entities+=dim({a,b,value:Math.hypot(b[0]-a[0],b[1]-a[1]),prefix:`P${i+1}-P${(i+1)%p.points.length+1} `},"HW_PARCEL_DIM",.6);}
   const c=[p.points.reduce((a,b)=>a+b[0],0)/p.points.length,p.points.reduce((a,b)=>a+b[1],0)/p.points.length];
-  entities+=textEntity(c,p.id==='p1226'?'1226地號(水利地).溝寬4M':'1230地號(676平方米)',0.85,0,layer);
+  entities+=textEntity(c,p.name,0.85,0,layer);
  }
 
  const layout=(window.HUWEI_1230_LAYOUT&&window.HUWEI_1230_LAYOUT.getData)?window.HUWEI_1230_LAYOUT.getData():[];

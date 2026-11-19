@@ -1,5 +1,5 @@
 {
-  "version": "1.9.5",
+  "version": "1.9.8",
   "official": false,
   "calibration": {
     "ids": [
@@ -70,7 +70,7 @@
   "ratioBasis": {
     "default": "combined",
     "included1230": 66,
-    "method": "V1.9.5: actual calibrated union reference, old site target 3507.75 (alternate 3573.75), proportional accounting only; new facilities unchanged"
+    "method": "V1.9.8: actual calibrated union reference, old site target 3507.75 (alternate 3573.75), proportional accounting only; new facilities unchanged"
   },
   "interface": "smart labels, quick focus, area in m² and ping; pointer gestures, responsive landscape panel, map-only mode; print and share SVG/PNG, A3/A4 portrait/landscape; adaptive shape-aware label arrangement",
   "defaultLabelScale": 0.85,

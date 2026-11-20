@@ -3,12 +3,12 @@
 <html lang="zh-Hant">
 <head>
 <meta charset="utf-8"/>
-<meta name="cad-version" content="1.9.8"/>
+<meta name="cad-version" content="2.2.2"/>
 <meta content="width=device-width,initial-scale=1,maximum-scale=5" name="viewport"/>
 <meta content="#f4f8f8" name="theme-color"/>
-<title>虎尾畜牧場｜CAD 圖面查詢 V1.9.8</title>
-<link href="assets/app.css?v=1.9.8" rel="stylesheet"/>
-<link href="assets/simple-ui.css?v=1.9.8" rel="stylesheet"/><link href="assets/share.css?v=1.9.8" rel="stylesheet"/><link rel="manifest" href="manifest.webmanifest?v=1.9.8"/>
+<title>虎尾畜牧場｜CAD 圖面查詢 V2.2.2</title>
+<link href="assets/app.css?v=2.2.2" rel="stylesheet"/>
+<link href="assets/simple-ui.css?v=2.2.2" rel="stylesheet"/><link href="assets/share.css?v=2.2.2" rel="stylesheet"/><link rel="manifest" href="manifest.webmanifest?v=2.2.2"/>
 <link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png"/>
 <link rel="apple-touch-icon" sizes="180x180" href="icons/icon-180.png"/>
 <meta name="apple-mobile-web-app-capable" content="yes"/>
@@ -18,7 +18,7 @@
 <body>
 <div id="app">
 <header class="app-header">
-<div class="brand"><span class="brand-logo">▤</span><div><strong>虎尾畜牧場｜CAD 圖面查詢</strong><small>V1.9.8 · 尺寸與面積</small></div></div>
+<div class="brand"><span class="brand-logo">▤</span><div><strong>虎尾畜牧場｜CAD 圖面查詢</strong><small>V2.2.2 · 尺寸與面積</small></div></div>
 <div class="header-actions">
 <button class="btn small" id="pwaUpdate" type="button" aria-label="檢查系統更新">更新</button>
 
@@ -54,7 +54,7 @@
 <section aria-label="互動式 CAD 圖面" class="canvas-panel" id="centerPanel">
 <div class="map-toolbar"><div class="mode-tabs"><button class="btn small" id="modeQuery" type="button">圖面查詢</button><button class="btn small" id="modeArea" type="button">面積計算</button><button class="btn small" id="modeRatio" type="button">空地比</button></div>
 
-<div class="map-actions"><button class="btn small" id="openList" type="button">搜尋</button><button class="btn small" id="openInfo" type="button">資料</button>
+<div class="map-actions"><button class="btn small" id="openList" type="button">搜尋</button><button class="btn small" id="openInfo" type="button">資料</button><button class="btn small" id="measureOpen" type="button" aria-pressed="false">↔ 自由丈量</button><button class="btn small" id="auditOpen" type="button" aria-pressed="false">⚑ 配置檢查</button><button class="btn small" id="editorOpen" type="button" aria-pressed="false">✥ 配置編輯</button><button class="btn small" id="scenarioOpen" type="button" aria-pressed="false">▤ 方案比較</button>
 
 
 <button aria-pressed="false" class="btn small coverage-toggle engine-control" id="toggleCoverage" type="button">▧ 遮蔽・空地比計算</button>
@@ -64,7 +64,7 @@
 <button class="btn square" id="zoomOut" type="button">−</button>
 <button class="btn square" id="zoomIn" type="button">＋</button>
 <button class="btn small" id="fit" type="button">全場</button><button class="btn small" id="fullMap" aria-pressed="false" type="button">全螢幕</button><select id="quickFocus" aria-label="快速定位"><option value="">快速定位</option><option value="farrow">產房區</option><option value="boar">公豬舍</option><option value="gilt">育成配種區</option><option value="gest">妊娠舍</option><option value="new">1230 地號</option></select>
-<details class="compact-menu"><summary>顯示設定</summary><div class="menu-body"><label class="toggle"><input checked="" id="toggleLabels" type="checkbox"/> 圖面文字</label><label class="toggle">標示內容 <select id="labelContent"><option value="name">名稱</option><option value="area">面積</option><option value="both">名稱＋面積</option><option value="none">純圖面</option></select></label><label class="toggle">文字排版 <select id="labelArrangement"><option value="smart">智慧（預設）</option><option value="short">簡潔</option><option value="full">完整</option><option value="none">隱藏</option></select></label><label class="toggle"><input id="smartDims" type="checkbox" checked/> 智慧防重疊</label><label class="toggle"><input id="toggleReference" type="checkbox"/> 舊圖文字</label><label class="toggle"><input checked="" id="toggleDims" title="顯示目前選取區塊或遮蔽複選區塊的邊長" type="checkbox"/> 選取尺寸</label><label class="toggle"><input checked id="facilityGuides" type="checkbox"/> 選取堆肥舍時顯示間距</label><label class="toggle cad-font-control">圖面字體 <select aria-label="圖面字體大小" id="cadFontSize"><option selected="" value="0.85">小</option><option value="1">標準</option><option value="1.25">大</option><option value="1.5">特大</option></select></label><label class="toggle" title="預設優先選整面牆，包含中間門洞；取消後可點選 DXF 原圖短牆段"><input checked="" id="selectWholeSides" type="checkbox"/> 整面邊線（含門）</label><button class="btn small" id="parcelToggle" type="button">▱ 隱藏新增土地</button><button class="btn small" id="parcelFit" type="button">查看新土地</button></div></details><details class="compact-menu"><summary>進階</summary><div class="menu-body"><button class="btn small" id="advancedToggle" type="button">開啟尺寸核對</button><button class="btn small" id="addWall" type="button">＋ 補畫牆段</button><button class="btn small" id="addRegion" type="button">＋ 補畫區塊</button></div></details></div>
+<details class="compact-menu"><summary>顯示設定</summary><div class="menu-body"><label class="toggle"><input checked="" id="toggleLabels" type="checkbox"/> 圖面文字</label><label class="toggle">標示內容 <select id="labelContent"><option value="name">名稱</option><option value="area">面積</option><option value="both">名稱＋面積</option><option value="none">純圖面</option></select></label><label class="toggle">文字排版 <select id="labelArrangement"><option value="smart">智慧（預設）</option><option value="short">簡潔</option><option value="full">完整</option><option value="none">隱藏</option></select></label><label class="toggle"><input id="smartDims" type="checkbox" checked/> 智慧防重疊</label><label class="toggle"><input id="toggleReference" type="checkbox"/> 舊圖文字</label><label class="toggle"><input checked="" id="toggleDims" title="顯示目前選取區塊或遮蔽複選區塊的邊長" type="checkbox"/> 選取尺寸</label><label class="toggle"><input id="facilityGuides" type="checkbox"/> 間距輔助線</label><label class="toggle"><input id="guideDetail" type="checkbox"/> 細部間距（多點）</label><div class="clearance-settings"><label class="toggle"><input id="guideBuildings" type="checkbox" checked/> 建物間距</label><label class="toggle"><input id="guideWalls" type="checkbox" checked/> 牆壁間距</label><label class="toggle"><input id="guideBoundary" type="checkbox" checked/> 地界間距</label><label class="toggle"><input id="guideShortest" type="checkbox"/> 只顯示最短測距</label><label class="toggle"><input id="guideWarning" type="checkbox" checked/> 空間警示</label><label class="toggle">警示門檻 <input id="guideThreshold" type="number" min="0" max="50" step="0.1" inputmode="decimal" value="1" style="width:70px"/> m</label><small>警示僅供規劃，非法律標準。</small></div><label class="toggle cad-font-control">圖面字體 <select aria-label="圖面字體大小" id="cadFontSize"><option selected="" value="0.85">小</option><option value="1">標準</option><option value="1.25">大</option><option value="1.5">特大</option></select></label><label class="toggle" title="預設優先選整面牆，包含中間門洞；取消後可點選 DXF 原圖短牆段"><input checked="" id="selectWholeSides" type="checkbox"/> 整面邊線（含門）</label><label class="toggle"><input checked id="southWaterToggle" type="checkbox"/> 妊娠B南側水利地（2m）</label><button class="btn small" id="parcelToggle" type="button">▱ 隱藏新增土地</button><button class="btn small" id="parcelFit" type="button">查看新土地</button></div></details><details class="compact-menu"><summary>進階</summary><div class="menu-body"><button class="btn small" id="advancedToggle" type="button">開啟尺寸核對</button><button class="btn small" id="addWall" type="button">＋ 補畫牆段</button><button class="btn small" id="addRegion" type="button">＋ 補畫區塊</button></div></details></div>
 </div>
 <div class="canvas-notice advanced-only" id="notice"><span class="notice-dot">i</span> 採精／儲物走道位於兩房間之間；病死豬通道北線已補齊；下方橫向走道東端另設浴室1（尺寸／門位待核）。整面牆長<strong>包含門洞寬度</strong>，只有轉角才拆成多段；CAD 幾何值不是現場實測。</div>
 <div class="coverage-strip compact-strip" hidden="" id="coverageStrip">
@@ -76,7 +76,31 @@
 <svg aria-label="互動 CAD 圖面，點選區塊或牆段可編輯尺寸" id="cadSvg" preserveaspectratio="xMidYMid meet" role="img" viewbox="-4 0 72 79" xmlns="http://www.w3.org/2000/svg">
 <g id="cadBase"></g><g id="calibrationBoundary" pointer-events="none"></g><g id="parcelOverlay"></g><g id="layout1230Overlay"></g><g id="regionOverlay"></g><g id="landAuditOverlay" pointer-events="none"></g><g id="edgeOverlay"></g><g id="wallOverlay"></g><g id="selectedOverlay"></g>
 </svg>
-<div class="drawing-tip" hidden="" id="drawingTip">點選第 1 個端點，再點第 2 個端點建立待核牆段。按 Esc 取消。</div>
+<section class="scenario-panel" id="scenarioPanel" hidden aria-label="1230配置方案儲存與比較">
+ <div class="measure-head"><strong>1230 配置方案</strong><button class="btn small" id="scenarioClose" type="button">關閉</button></div>
+ <p class="scenario-help">保存六項新增設施的座標與尺寸。只影響規劃配置，不會修改原始 DXF。</p>
+ <label class="scenario-label">已儲存方案<select id="scenarioSelect" aria-label="選擇已儲存方案"></select></label>
+ <div id="scenarioState" role="status" class="scenario-state">檢查方案中…</div>
+ <div class="scenario-actions"><button type="button" class="btn small primary" id="scenarioApply">套用所選方案</button><button type="button" class="btn small" id="scenarioSave">儲存目前配置</button><button type="button" class="btn small" id="scenarioClone">另存新方案</button><button type="button" class="btn small" id="scenarioRename">重新命名</button><button type="button" class="btn small" id="scenarioDelete">刪除方案</button><button type="button" class="btn small" id="scenarioExport">備份 JSON</button><button type="button" class="btn small" id="scenarioImport">還原 JSON</button><input type="file" id="scenarioImportFile" accept=".json,application/json" hidden></div>
+ <div class="scenario-comparison"><strong>兩方案比較</strong><div class="scenario-compare-select"><label>A 方案<select id="scenarioCompareA"></select></label><label>B 方案<select id="scenarioCompareB"></select></label></div><div id="scenarioCompareTable" class="scenario-table" role="region" aria-label="兩方案比較結果"></div></div>
+ <small>面積按 1230 設施多邊形計算。合併遮蔽面積採原場 3,507.75 m² 代書逆推基準；非正式測量或建蔽率核准值。所有方案僅存此瀏覽器，請定期備份 JSON。</small>
+</section>
+<section class="facility-audit-panel" id="facilityAuditPanel" hidden aria-label="1230配置自動檢查">
+<div class="measure-head"><strong>1230 配置自動檢查</strong><button id="auditClose" class="btn small" type="button">關閉</button></div>
+<div class="audit-control"><label>最小間距警示（m）<input id="auditMinGap" type="number" value="1" min="0" max="20" step="0.1" inputmode="decimal"></label><label>東側水平餘寬警示（m）<input id="auditMinPath" type="number" value="3" min="0" max="20" step="0.1" inputmode="decimal"></label></div>
+<label class="audit-show"><input id="auditShowMarks" type="checkbox" checked> 在 CAD 標示問題位置</label>
+<div id="auditSummary" class="audit-summary" role="status">正在檢查…</div>
+<div id="auditResults" class="audit-results"></div>
+<small>依目前 CAD 多邊形計算：建物貼齊地界與越界分別標示；東側數值僅是到參考地界的水平餘寬，非連續通行淨寬。地界與門洞均待現場核對，門檻並非法定標準。</small>
+</section>
+<section class="editor-panel" id="editorPanel" hidden aria-label="1230設施配置編輯">
+ <div class="measure-head"><strong>1230 設施配置編輯</strong><button class="btn small" id="editorClose" type="button">關閉</button></div>
+ <label>選擇設施<select id="editorFacility"></select></label>
+ <div class="editor-grid"><label>寬度（m）<input id="editorWidth" type="number" min="0.2" max="100" step="0.01" inputmode="decimal"></label><label>長度（m）<input id="editorHeight" type="number" min="0.2" max="100" step="0.01" inputmode="decimal"></label><label>旋轉角度（°）<input id="editorAngle" type="number" step="0.1" inputmode="decimal"></label><label>水平移動（m）<input id="editorDx" type="number" step="0.1" inputmode="decimal" value="0"></label><label>垂直移動（m）<input id="editorDy" type="number" step="0.1" inputmode="decimal" value="0"></label></div>
+ <div class="editor-actions"><button class="btn primary small" id="editorApply" type="button">套用尺寸與位置</button><button class="btn small" id="editorUndo" type="button">復原上一步</button><button class="btn small" id="editorReset" type="button">還原原始配置</button></div>
+ <div class="editor-hint" id="editorInfo" role="status">先選取設施；也可在圖面直接拖曳移動。</div><small>六項規劃設施可編輯；原母豬場 CAD 與地籍線維持鎖定。碰撞與超界將阻止套用。設定保存在本機瀏覽器。</small>
+ </section>
+ <section class="measure-panel" id="measurePanel" hidden aria-label="自由丈量工具"><div class="measure-head"><strong>自由丈量</strong><button class="btn small" id="measureClose" type="button">關閉</button></div><label>丈量模式<select id="measureMode"><option value="line">兩點距離</option><option value="horizontal">水平距離</option><option value="vertical">垂直距離</option><option value="chain">多點連續距離</option></select></label><label class="measure-snap"><input type="checkbox" id="measureSnap" checked/> 吸附 CAD 端點</label><div class="measure-output"><strong id="measureResult">尚未丈量</strong><small id="measureCount">0 個點</small><div id="measureDetail"></div></div><p id="measureHelp">依序點選起點 A 與終點 B，便會顯示距離。</p><div class="measure-actions"><button class="btn small" id="measureUndo" disabled>上一步</button><button class="btn small" id="measureFinish" disabled>完成</button><button class="btn small" id="measureClear">清除</button><button class="btn small" id="measureCopy">複製</button></div><small>僅 CAD 座標計算，不修改原始圖形；不是現場實測。</small></section><div class="drawing-tip" hidden="" id="drawingTip">點選第 1 個端點，再點第 2 個端點建立待核牆段。按 Esc 取消。</div>
 <div id="hoverRegion" class="hover-region" hidden></div><div class="view-scale"><span class="scale-bar"></span> CAD m <span id="zoomLabel">100%</span></div>
 </div>
 <footer class="map-footer">基地 4,765 m²（不含1226） · 規劃參考，非正式界址或實測</footer>
@@ -91,7 +115,7 @@
 <section aria-label="空地比試算" class="ratio-panel">
 <strong>基地遮蔽與空地比</strong><label>計算土地範圍<select id="ratioScope"><option value="old">原母豬場（4,089 m²）</option><option value="new">1230 地號（登記676 m²）</option><option selected="" value="all">合併基地（登記4,765 m²）</option></select></label><label>土地分母<select id="landBasis"><option value="registered">登記基準（4,765 m²）</option><option value="drawing">校正圖面（4,765 m²）</option></select></label><small>1230 登記676 m²；校正圖面676 m²（原圖646.35 m²）；界址待代書確認。</small>
 
-<div class="ratio-preset" role="group" aria-label="快捷試算方案"><button class="btn small" id="ratioOld" type="button" aria-pressed="false">原場16區</button><button class="btn small" id="ratioNew" type="button" aria-pressed="false">1230七項設施</button><button class="btn small" id="ratioAll" type="button" aria-pressed="false">合併情境</button></div>
+<div class="ratio-preset" role="group" aria-label="快捷試算方案"><button class="btn small" id="ratioOld" type="button" aria-pressed="false">原場16區</button><button class="btn small" id="ratioNew" type="button" aria-pressed="false">1230六項設施</button><button class="btn small" id="ratioAll" type="button" aria-pressed="false">合併情境</button></div>
 <div id="ratioPresetStatus" class="ratio-preset-status" role="status" aria-live="polite"></div>
 <div class="ratio-kpis"><div>基地面積<b id="ratioLand">—</b></div><div>選取遮蔽面積<b id="ratioCovered">—</b></div><div>剩餘未遮蔽面積<b id="ratioFree">—</b></div><div>空地比<b id="ratioFreePct">—</b></div><div>遮蔽率<b id="ratioPct">—</b></div><div>可新增遮蔽額度<b id="ratioAllowance">—</b></div></div>
 <div aria-hidden="true" class="ratio-bar"><span id="ratioFill"></span><i id="ratioMark"></i></div><div id="ratioStatus" role="status"></div><small id="ratioExcluded"></small><small>空地比＝（基地面積－試算遮蔽面積）÷基地面積。未選區暫視為未遮蔽；空地區域及1226水利地不計遮蔽。七項設施快捷鍵僅為假設全有遮蔽的情境。比例上限可自行設定，非主管機關認定；合併基地須確認可依法合併使用。</small>
@@ -113,14 +137,14 @@
 </main>
 <dialog class="region-dialog" id="regionDialog"><form id="regionForm" method="dialog"><h3>建立遺漏的區塊</h3><p>只建立核對用區域，不會修改原始 CAD。</p><label>區塊名稱<input id="regionName" maxlength="70" placeholder="例如：採精室左側短走道" required=""/></label><label>放入清單分類<select id="regionGroup"><option value="走道">走道與進出動線</option><option value="產房">產房</option><option value="附屬">附屬空間</option><option value="育成">新女豬及配種區</option><option value="妊娠">妊娠舍</option><option value="外圍">周界及其他</option></select></label><div class="dialog-actions"><button class="btn" id="cancelRegion" type="button">取消</button><button class="btn primary" type="submit">確認新增區塊</button></div></form></dialog><div aria-live="polite" class="toast" id="toast" role="status"></div>
 </div>
-<script src="assets/cad-model.js?v=1.9.8"></script>
-<script src="assets/cad-source.js?v=1.9.8"></script>
-<script src="assets/dxf-export.js?v=1.9.8"></script>
-<script src="assets/calibration.js?v=1.9.8"></script>
-<script src="assets/land-audit-data.js?v=1.9.8"></script>
-<script src="assets/app.js?v=1.9.8"></script>
-<script src="assets/parcels.js?v=1.9.8"></script>
-<script src="assets/layout1230.js?v=1.9.8"></script>
-<script src="assets/cad-labels.js?v=1.9.8"></script><script src="assets/smart-labels.js?v=1.9.8"></script>
-<script src="assets/simple-ui.js?v=1.9.8"></script><section id="sharePanel" hidden role="dialog" aria-modal="true" aria-labelledby="shareTitle"><div class="share-card"><header><h2 id="shareTitle">圖面列印與分享</h2><button class="btn" id="shareClose">關閉</button></header><div class="share-controls"><label>圖面範圍<select id="shareScope"><option value="full">全場（依目前圖層）</option><option value="view">目前視野</option></select></label><label>紙張<select id="sharePaper"><option>A4</option><option>A3</option></select></label><label>方向<select id="shareOrientation"><option value="landscape">橫式</option><option value="portrait">直式</option></select></label><label>附加資訊<select id="shareStats"><option value="none">純圖面</option><option value="area">目前選取面積</option><option value="ratio">目前空地比試算</option></select></label></div><p class="share-note">沿用目前圖層、文字及尺寸顯示。若需標註尺寸，請先在圖面選取區塊並開啟尺寸。未選區不代表現場無遮蔽。圖面為規劃參考，非正式界址或實測。</p><div id="sharePreview"></div><p id="shareStatus" role="status"></p><footer><button class="btn" id="shareSvg">下載 SVG</button><button class="btn" id="sharePng">下載 PNG</button><button class="btn primary" id="sharePrint">列印／另存 PDF</button></footer></div></section><div id="printSheet" aria-hidden="true"></div><script src="assets/share.js?v=1.9.8"></script><aside id="pwaNotice" hidden role="status" aria-live="polite"><strong id="pwaStatus"></strong><small id="pwaVersions"></small><div><button id="pwaRetry" class="btn small" type="button">重新檢查</button><button id="pwaReload" class="btn small" type="button" hidden>載入新版</button><button id="pwaDismiss" class="btn small" type="button">關閉</button></div></aside><script src="assets/pwa.js?v=1.9.8"></script></body>
+<script src="assets/cad-model.js?v=2.2.2"></script>
+<script src="assets/cad-source.js?v=2.2.2"></script>
+<script src="assets/dxf-export.js?v=2.2.2"></script>
+<script src="assets/calibration.js?v=2.2.2"></script>
+<script src="assets/land-audit-data.js?v=2.2.2"></script>
+<script src="assets/app.js?v=2.2.2"></script>
+<script src="assets/parcels.js?v=2.2.2"></script>
+<script src="assets/layout1230.js?v=2.2.2"></script>
+<script src="assets/cad-labels.js?v=2.2.2"></script><script src="assets/smart-labels.js?v=2.2.2"></script>
+<script src="assets/simple-ui.js?v=2.2.2"></script><section id="sharePanel" hidden role="dialog" aria-modal="true" aria-labelledby="shareTitle"><div class="share-card"><header><h2 id="shareTitle">圖面列印與分享</h2><button class="btn" id="shareClose">關閉</button></header><div class="share-controls"><label>圖面範圍<select id="shareScope"><option value="full">全場（依目前圖層）</option><option value="view">目前視野</option></select></label><label>紙張<select id="sharePaper"><option>A4</option><option>A3</option></select></label><label>方向<select id="shareOrientation"><option value="landscape">橫式</option><option value="portrait">直式</option></select></label><label>附加資訊<select id="shareStats"><option value="none">純圖面</option><option value="area">目前選取面積</option><option value="ratio">目前空地比試算</option></select></label></div><p class="share-note">沿用目前圖層、文字及尺寸顯示。若需標註尺寸，請先在圖面選取區塊並開啟尺寸。未選區不代表現場無遮蔽。圖面為規劃參考，非正式界址或實測。</p><div id="sharePreview"></div><p id="shareStatus" role="status"></p><footer><button class="btn" id="shareSvg">下載 SVG</button><button class="btn" id="sharePng">下載 PNG</button><button class="btn primary" id="sharePrint">列印／另存 PDF</button></footer></div></section><div id="printSheet" aria-hidden="true"></div><script src="assets/share.js?v=2.2.2"></script><aside id="pwaNotice" hidden role="status" aria-live="polite"><strong id="pwaStatus"></strong><small id="pwaVersions"></small><div><button id="pwaRetry" class="btn small" type="button">重新檢查</button><button id="pwaReload" class="btn small" type="button" hidden>載入新版</button><button id="pwaDismiss" class="btn small" type="button">關閉</button></div></aside><script src="assets/pwa.js?v=2.2.2"></script><script src="assets/free-measure.js?v=2.2.2"></script><script src="assets/facility-editor.js?v=2.2.2"></script><script src="assets/facility-audit.js?v=2.2.2"></script><script src="assets/scenario-manager.js?v=2.2.2"></script><script src="assets/mobile-polish.js?v=2.2.2"></script></body>
 </html>

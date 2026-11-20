@@ -12,3 +12,43 @@
 .dimension-switch{display:flex;gap:6px;margin:8px 0}.dimension-switch button{flex:1;min-height:38px;border:1px solid #b9cfd1;border-radius:7px;background:white;color:#345c60;font-size:14px}.dimension-switch button[aria-pressed=true]{background:#23786d;color:white;border-color:#23786d}.side-row{display:flex;align-items:center;gap:3px}.side-expand{flex:none;min-width:30px;min-height:34px;border:0;background:transparent;color:#23786d;font-size:16px}.sub-edge{background:#edf5f5}.sub-edge[hidden]{display:none!important}.sub-edge .edge-link{padding-left:24px;font-size:12px}
 
 #pwaNotice[hidden]{display:none!important}#pwaNotice{position:fixed;z-index:2000;top:60px;right:12px;width:min(350px,calc(100vw - 24px));padding:12px;background:#fff;border:1px solid #b7d6d0;border-radius:10px;box-shadow:0 6px 24px #234b5030;display:grid;gap:8px}#pwaNotice small{color:#526d75}#pwaNotice>div{display:flex;gap:6px;flex-wrap:wrap}#pwaUpdate{white-space:nowrap}#pwaReload[hidden]{display:none}
+.clearance-settings{display:grid;gap:7px;padding:8px 4px;border-top:1px solid #dce8e9;border-bottom:1px solid #dce8e9}.clearance-settings small{font-size:10px;color:#627d88}.clearance-min{display:grid;gap:4px;padding:9px;margin:8px 0;background:#f0f7f6;border-radius:7px;font-size:12px}.gap-warn{color:#ae382e!important;font-weight:700}.clearance-min small{display:block}.pure-map .facility-guide{display:none!important}
+
+/* V2.0.3 planning editor: compact, touch-friendly, independent from free-measure panel. */
+.editor-panel{position:absolute;z-index:13;top:12px;right:12px;width:min(330px,calc(100% - 24px));max-height:calc(100% - 24px);overflow:auto;padding:12px;background:#fff;border:1px solid #b8d4d4;border-radius:12px;box-shadow:0 8px 28px #16464a29;display:grid;gap:9px;font-size:12px;touch-action:pan-y;overscroll-behavior:contain}
+.editor-panel[hidden]{display:none!important}.editor-panel label{display:grid;gap:4px;color:#536f79;font-size:11px;font-weight:650}.editor-panel input,.editor-panel select{width:100%;min-width:0;padding:8px;border:1px solid #bfcfd2;border-radius:7px;color:#254650;font-size:14px;background:white}.editor-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.editor-actions{display:flex;flex-wrap:wrap;gap:5px}.editor-hint{padding:9px;border-radius:7px;background:#f1f8f5;color:#316f66;font-size:11px;line-height:1.5}.editor-hint.warning{background:#fff2e9;color:#a64d22}.editor-panel small{color:#738e94;line-height:1.5}.editor-handle{cursor:move;fill:#34a69a;fill-opacity:.08;stroke:#1e978a;stroke-width:2;vector-effect:non-scaling-stroke}.editor-handle:active{cursor:grabbing}.editor-preview{pointer-events:none;fill:#22a694;fill-opacity:.16;stroke:#0c8979;stroke-width:2;vector-effect:non-scaling-stroke;stroke-dasharray:6 3}
+@media(max-width:700px){.editor-panel{top:8px;right:8px;width:min(300px,calc(100% - 16px));max-height:min(62%,470px);padding:9px}.editor-grid{gap:5px}.editor-panel input{padding:6px}}
+
+/* V2.0.4 configurable geometric clearance audit */
+.facility-audit-panel{position:absolute;z-index:14;bottom:12px;left:12px;width:min(350px,calc(100% - 24px));max-height:min(76%,560px);overflow:auto;background:#fff;border:1px solid #bad4d6;border-radius:12px;box-shadow:0 8px 28px #16464a29;padding:13px;font-size:12px;touch-action:pan-y;overscroll-behavior:contain}
+.facility-audit-panel[hidden]{display:none!important}.facility-audit-panel .audit-control{display:grid;grid-template-columns:1fr 1fr;gap:10px}.facility-audit-panel label{font-size:11px;color:#476a74;display:grid;gap:4px}.facility-audit-panel input[type=number]{width:100%;padding:7px;border-radius:7px;border:1px solid #c3d5d8;font-size:14px;color:#21454d}.facility-audit-panel .audit-show{display:flex;align-items:center;gap:8px;margin:10px 0}.facility-audit-panel .audit-show input{accent-color:#178c80}.audit-summary{padding:9px 11px;background:#edf7f3;border-radius:8px;margin:9px 0;color:#26665b;font-weight:700;line-height:1.55}.audit-summary.alert{background:#fff1ec;color:#a2442e}.audit-results{display:grid;gap:7px}.audit-row{padding:9px;border:1px solid #d8e6e8;border-radius:8px;background:#fbfdfd;line-height:1.5}.audit-row.warn{border-color:#edc59c;background:#fffaf3}.audit-row.bad{border-color:#eeb7b3;background:#fff5f4}.audit-row strong{display:block;color:#2a5963}.audit-row small{display:block;color:#6b858d}.audit-row .audit-value{font-size:13px;font-weight:750}.facility-audit-panel>small{display:block;margin-top:9px;color:#607c84;line-height:1.5}.audit-pin-label{font:700 11px sans-serif;paint-order:stroke;stroke:#fff;stroke-width:3px;pointer-events:none}.audit-pin-line{vector-effect:non-scaling-stroke;stroke-width:2px;pointer-events:none}
+@media(max-width:700px){.facility-audit-panel{left:8px;bottom:8px;width:min(340px,calc(100% - 16px));max-height:48%;padding:10px}.facility-audit-panel .audit-control{gap:6px}}
+
+/* V2.1.2: mobile editing targets, readable fields, portrait/landscape panels. */
+@media (pointer:coarse){
+ .editor-handle{fill-opacity:.16;stroke-width:3;touch-action:none;}
+ .editor-panel button,.editor-panel select,.measure-panel button,.scenario-panel button,.facility-audit-panel button{min-height:40px;}
+ .editor-panel input,.editor-panel select,.facility-audit-panel input[type=number]{font-size:16px;}
+ .editor-panel,.measure-panel,.scenario-panel,.facility-audit-panel{overscroll-behavior:contain;-webkit-overflow-scrolling:touch;}
+}
+@media(max-width:980px) and (orientation:landscape) and (max-height:560px){
+ .editor-panel{top:5px;right:5px;bottom:auto;width:min(310px,48vw);max-height:calc(100% - 10px);overflow:auto;}
+ .measure-panel,.facility-audit-panel{top:5px;bottom:auto;left:5px;max-height:calc(100% - 10px);width:min(310px,48vw);}
+}
+@media(max-width:700px) and (orientation:portrait){
+ .editor-panel{max-height:min(55%,430px);}
+ .map-actions{row-gap:5px;}
+}
+
+/* V2.1.3 landscape: keep the CAD canvas tall by scrolling tools horizontally instead of wrapping them. */
+@media(max-width:980px) and (orientation:landscape) and (max-height:560px){
+ .map-toolbar{display:flex!important;flex-wrap:nowrap!important;align-items:center!important;gap:5px!important;min-height:43px;max-height:43px;overflow:hidden;padding:3px 5px!important;}
+ .map-toolbar .mode-tabs{flex:0 0 auto;white-space:nowrap;}
+ .map-toolbar .mode-tabs .btn{padding:3px 6px;font-size:11px;}
+ .map-toolbar .map-actions{display:flex!important;flex:1 1 auto;min-width:0;max-width:100%;flex-wrap:nowrap!important;overflow-x:auto;overflow-y:hidden;scrollbar-width:thin;white-space:nowrap;-webkit-overflow-scrolling:touch;}
+ .map-toolbar .map-actions>*{flex:0 0 auto;}
+ .map-toolbar .map-actions .btn{min-height:31px;padding:3px 6px;font-size:11px;}
+ .map-toolbar .map-actions .compact-menu summary{padding:5px 7px;}
+ .map-toolbar .map-actions .compact-menu[open]{position:static;}
+ .map-toolbar .map-actions .compact-menu[open]>.menu-body{position:fixed;right:8px;top:51px;max-height:65dvh;overflow:auto;z-index:100;}
+}

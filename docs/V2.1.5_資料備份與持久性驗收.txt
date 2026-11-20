@@ -1,0 +1,8 @@
+V2.1.5｜資料備份與持久性修正
+
+1. JSON 方案備份新增目前工作配置 currentPlan，並標註 workingPlanUnsaved。
+2. 還原含未儲存工作配置的備份時，新增「備份時的未儲存配置」方案（若沒有相同方案），不自動覆蓋目前圖面。
+3. 本機儲存不可用時，方案管理介面不再顯示「已儲存」的誤導訊息。
+4. 已建立 Chromium 原生 HTTP origin localStorage 回歸測試及備份匯入驗收。
+
+限制：真實 iPhone/iPad PWA 與外部 GitHub Pages 網站未於此環境驗收。圖面與地界非正式測繪成果。

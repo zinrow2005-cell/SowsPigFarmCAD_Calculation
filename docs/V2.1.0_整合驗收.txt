@@ -1,0 +1,65 @@
+王泰山畜牧場 CAD V2.1.1 整合驗收
+
+方法：Chromium Headless，set_content 載入 HTML 並依 index.html 順序注入本機 JS（瀏覽器政策阻擋本機網址直接導航）。桌面 1440×900、手機視窗 390×844。此方法可驗證 JS 操作及狀態，但不等同正式網頁導航、Service Worker 離線或手機實機觸控。
+
+修正：配置整批還原復原、整批啟動載入配置；更新 README 既有錯誤面積數值。
+
+測試結果：
+PASS [1440] 編輯模組初始化
+PASS [1440] 配置稽核初始化
+PASS [1440] 方案管理初始化
+PASS [1440] editorOpen 開啟
+PASS [1440] scenarioOpen 開啟
+PASS [1440] auditOpen 開啟
+PASS [1440] measureOpen 開啟
+PASS [1440] 初始方案建立
+PASS [1440] 另存方案
+PASS [1440] 儲存方案
+PASS [1440] 方案比較表
+PASS [1440] 方案切換
+PASS [1440] 七項還原整批復原
+PASS [1440] 無效尺寸阻擋
+PASS [1440] 有效位移更新圖面座標
+PASS [1440] 方案未儲存修改提示
+PASS [1440] 單項位移可復原
+PASS [1440] 7項設施掃描
+PASS [1440] 警示摘要
+PASS [1440] 量測模式 line
+PASS [1440] 量測模式 horizontal
+PASS [1440] 量測模式 vertical
+PASS [1440] 量測模式 chain
+PASS [1440] 清除測距
+PASS [1440] 面積方案 ratioOld
+PASS [1440] 面積方案 ratioNew
+PASS [1440] 面積方案 ratioAll
+PASS [1440] 瀏覽器執行無錯誤：[]
+PASS [390] 編輯模組初始化
+PASS [390] 配置稽核初始化
+PASS [390] 方案管理初始化
+PASS [390] editorOpen 開啟
+PASS [390] scenarioOpen 開啟
+PASS [390] auditOpen 開啟
+PASS [390] measureOpen 開啟
+PASS [390] 初始方案建立
+PASS [390] 另存方案
+PASS [390] 儲存方案
+PASS [390] 方案比較表
+PASS [390] 方案切換
+PASS [390] 七項還原整批復原
+PASS [390] 無效尺寸阻擋
+PASS [390] 有效位移更新圖面座標
+PASS [390] 方案未儲存修改提示
+PASS [390] 單項位移可復原
+PASS [390] 7項設施掃描
+PASS [390] 警示摘要
+PASS [390] 量測模式 line
+PASS [390] 量測模式 horizontal
+PASS [390] 量測模式 vertical
+PASS [390] 量測模式 chain
+PASS [390] 清除測距
+PASS [390] 面積方案 ratioOld
+PASS [390] 面積方案 ratioNew
+PASS [390] 面積方案 ratioAll
+PASS [390] 瀏覽器執行無錯誤：[]
+
+限制：未驗證真實手指拖曳、所有檔案下載匯入、GitHub Pages 發布、實機 PWA 離線操作。

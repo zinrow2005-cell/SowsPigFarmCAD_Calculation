@@ -1,6 +1,6 @@
 'use strict';
-const VERSION='1.9.8', PREFIX='huwei-cad-pwa-', CACHE=PREFIX+VERSION;
-const ASSETS=['app.css','app.js','cad-labels.js','cad-model.js','cad-source.js','calibration.js','dxf-export.js','land-audit-data.js','layout1230.js','parcels.js','pwa.js','share.css','share.js','simple-ui.css','simple-ui.js','smart-labels.js'].map(x=>'./assets/'+x+'?v='+VERSION);
+const VERSION='2.2.5', PREFIX='huwei-cad-pwa-', CACHE=PREFIX+VERSION;
+const ASSETS=['app.css','app.js','cad-labels.js','cad-model.js','cad-source.js','calibration.js','dxf-export.js','free-measure.js','facility-editor.js','facility-audit.js','scenario-manager.js','mobile-polish.js','land-audit-data.js','layout1230.js','parcels.js','pwa.js','share.css','share.js','simple-ui.css','simple-ui.js','smart-labels.js'].map(x=>'./assets/'+x+'?v='+VERSION);
 const FILES=['./index.html','./manifest.webmanifest?v='+VERSION,...ASSETS,'./icons/icon-180.png','./icons/icon-192.png','./icons/icon-32.png','./icons/icon-512.png','./icons/maskable-512.png'];
 self.addEventListener('install',event=>event.waitUntil((async()=>{const release=await fetch(new Request('./release.json',{cache:'no-store'}));if(!release.ok||(await release.json()).version!==VERSION)throw Error('Release not ready');const cache=await caches.open(CACHE);await cache.addAll(FILES.map(x=>new Request(x,{cache:'reload'})));const html=await cache.match('./index.html');if(!html||!(await html.text()).includes('name="cad-version" content="'+VERSION+'"'))throw Error('HTML version mismatch');await self.skipWaiting();})()));
 self.addEventListener('activate',event=>event.waitUntil((async()=>{await self.clients.claim();await Promise.all((await caches.keys()).filter(k=>k.startsWith(PREFIX)&&k!==CACHE).map(k=>caches.delete(k)));})()));

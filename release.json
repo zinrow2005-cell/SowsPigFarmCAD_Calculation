@@ -1,5 +1,5 @@
 {
-  "version": "1.9.8",
+  "version": "2.2.5",
   "official": false,
   "calibration": {
     "ids": [
@@ -70,11 +70,11 @@
   "ratioBasis": {
     "default": "combined",
     "included1230": 66,
-    "method": "V1.9.8: actual calibrated union reference, old site target 3507.75 (alternate 3573.75), proportional accounting only; new facilities unchanged"
+    "method": "V2.2.4: south 2m irrigation strip aligned to whole sow-farm width; storage renamed management; original 1230 management reassigned to isolation function; feed factory side length set to 12.2m with area preserved."
   },
   "interface": "smart labels, quick focus, area in m² and ping; pointer gestures, responsive landscape panel, map-only mode; print and share SVG/PNG, A3/A4 portrait/landscape; adaptive shape-aware label arrangement",
   "defaultLabelScale": 0.85,
-  "audit": "Regression testing: shared trial values, label NaN, calculation settings persistence/export and import",
+  "audit": "Model and parcel consistency update for south irrigation strip, room renaming, and feed factory dimension change.",
   "releaseStatus": "planning estimate; no surveyed boundary claim",
   "entryPoint": "index.html",
   "pwa": {
@@ -85,5 +85,5 @@
     "updates": "network-first navigation, release polling, active worker upgrade, versioned assets"
   },
   "performance": "Gesture frame coalescing and deferred dimension/label layout; deduplicated candidates and hover calculation",
-  "geometryRevision": "V1.8.2: west corridor display and boundary aligned to source CAD west perimeter; west drain assumed 0.8m; full farrowing wall lengths span door openings; B redundant return edge removed; calibrated west coordinates restored; revised land audit"
+  "geometryRevision": "V2.2.5: feed factory changed to 11.5m top/bottom and 12.5m left/right, 143.75m²; all placement values synchronized."
 }

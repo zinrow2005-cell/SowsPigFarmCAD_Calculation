@@ -1,0 +1,19 @@
+V2.2.5 GitHub Pages 部署版號一致性修正（2026-11-20）
+
+已發現原交付 CAD_V225.zip 的 index.html 和 README.md 仍是 V2.2.2，
+但 release.json、manifest.webmanifest、sw.js 均為 V2.2.5。
+這將使 V2.2.5 Service Worker install 階段的 HTML 版本檢查失敗，導致更新卡住。
+
+此次修正：
+1. index.html meta cad-version、畫面標題、CSS/JS query 參數均改為 2.2.5。
+2. 將空地比段落中舊「七項設施」改為「六項設施」。
+3. README 版本標題同步改為 V2.2.5。
+4. release.json 與 sw.js 維持 V2.2.5，無須改變幾何資料。
+
+部署說明：必須把 measure 內所有檔案置於 GitHub Pages 實際發布的根目錄；
+確認 GitHub index.html、release.json、sw.js 版本皆為 2.2.5；
+等待 GitHub Pages Actions 完成，再按網頁右上角「更新」或重新整理。
+請勿清除網站資料（包括 localStorage），以免丟失本機建物配置。
+
+檢查結果：Chromium set_content 測試（桌面、手機直式、橫式）可載入，主要四個面板可開啟；
+JavaScript 語法檢查通過；受環境限制不能測試真實 HTTPS PWA 安裝與手機觸控。
